@@ -33,12 +33,14 @@ def creat_publishedAfter():
 
 
 def get_search():
-    search_response = youtube.search().list(part= 'snippet',
-                                            eventType= 'none',
-                                            maxResults= '50',
-                                            publishedAfter= creat_publishedAfter(),
-                                            q= '774inc',
-                                            type= 'video').execute()
+    search_response = youtube.search().list(
+        part= 'snippet',
+        eventType= 'none',
+        maxResults= '50',
+        publishedAfter= creat_publishedAfter(),
+        q= '774inc',
+        type= 'video').execute()
+    
     video_ids = []
     channel_ids = []
     for item in search_response['items']:
@@ -48,11 +50,13 @@ def get_search():
 
 
 def get_search_upcoming():
-    search_response = youtube.search().list(part= 'snippet',
-                                            eventType= 'upcoming',
-                                            maxResults= '50',
-                                            q= '774inc',
-                                            type= 'video').execute()
+    search_response = youtube.search().list(
+        part= 'snippet',
+        eventType= 'upcoming',
+        maxResults= '50',
+        q= '774inc',
+        type= 'video').execute()
+    
     video_ids = []
     channel_ids = []
     for item in search_response['items']:
@@ -62,8 +66,9 @@ def get_search_upcoming():
 
 
 def get_video(video_id):
-    video = youtube.videos().list(part = 'snippet,liveStreamingDetails',
-                                  id = video_id).execute()['items'][0]
+    video = youtube.videos().list(
+        part = 'snippet,liveStreamingDetails',
+        id = video_id).execute()['items'][0]
     return video
 
 
@@ -163,7 +168,6 @@ def main_processing():
     upcoming_video_ids, upcoming_channel_ids = get_search_upcoming()
     video_ids += upcoming_video_ids
     channel_ids += upcoming_channel_ids
-    
     
     for i in range(len(video_ids)):
         #チャンネルアイコンの取得と774inc所属以外のチャンネルなら以降の処理をしない
